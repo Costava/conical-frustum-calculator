@@ -1,0 +1,69 @@
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #222;
+}
+
+.app {
+	margin: 0 0 0 50%;
+	border: 0;
+	border-radius: 0 0 8px 8px;
+	padding: 0 16px 16px 16px;
+	transform: translate(-50%, 0);
+
+	box-shadow: 0 0 16px 8px #000;
+
+	background-color: #fff;
+	display: inline-block;
+}
+
+.app-title {
+	text-align: center;
+}
+
+.diagram {
+	width: 100%;
+}
+
+.data {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.data > li {
+	display: flex;
+	flex-direction: row;
+}
+
+.data > li > span:after {
+	content: "\a0";
+}
+
+.data > li > input {
+	flex-grow: 2;
+
+	text-align: right;
+}
+
+.vol {
+	text-align: center;
+}
+
+.about {
+	margin: 0;
+}
