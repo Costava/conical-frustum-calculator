@@ -67,9 +67,11 @@ a:hover {
 }
 
 .data > li > input {
-	flex-grow: 2;
+	padding-left: 8px;
 
-	text-align: right;
+	flex: 1;
+
+	text-align: left;
 }
 
 .vol {
