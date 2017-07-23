@@ -1,17 +1,20 @@
 /**
- * Returns volume of liquid in a conical frustum that is resting on its smaller circular end
+ * Returns volume of liquid in a conical frustum that is sitting on a circular end
  * @param {object} o
- * @property {number} o.bottomRadius - radius of smaller end on the bottom
- * @property {number} o.topRadius - radius of bigger end on the top
+ * @property {number} o.bottomDiameter - diameter of bottom end
+ * @property {number} o.topDiameter - diameter of top end
  * @property {number} o.height - height of conical frustum
- * @property {number} o.fillHeight - height of liquid
+ * @property {number} o.fillHeight - height of liquid in conical frustum
  * @returns {number}
  */
 function conicalFrustumVolume(o) {
-	var difference = o.topRadius - o.bottomRadius;
+	var bottomRadius = o.bottomDiameter / 2;
+	var topRadius = o.topDiameter / 2;
 
-	var term1 = o.bottomRadius * o.bottomRadius * o.fillHeight;
-	var term2 = (o.bottomRadius * difference * o.fillHeight * o.fillHeight) / o.height;
+	var difference = topRadius - bottomRadius;
+
+	var term1 = bottomRadius * bottomRadius * o.fillHeight;
+	var term2 = (bottomRadius * difference * o.fillHeight * o.fillHeight) / o.height;
 	var term3 = (difference * difference * o.fillHeight * o.fillHeight * o.fillHeight) / (3 * o.height * o.height);
 
 	return Math.PI * (term1 + term2 + term3);
@@ -19,50 +22,70 @@ function conicalFrustumVolume(o) {
 
 var options = {};
 
+var bottomDiameterInput = document.querySelector('.js-bottom-diameter');
+var topDiameterInput =    document.querySelector('.js-top-diameter');
+var heightInput =         document.querySelector('.js-height');
+var fillHeightInput =     document.querySelector('.js-fill-height');
+
 function updateVolume() {
 	document.querySelector('.js-volume').innerHTML = conicalFrustumVolume(options);
 }
 
 //////////
 
-function bottomRadiusChange() {
-	options.bottomRadius = document.querySelector('.js-bottom-radius').value;
+function bottomDiameterChange() {
+	options.bottomDiameter = bottomDiameterInput.value;
+
+	localStorage.setItem("bottomDiameter", options.bottomDiameter);
 
 	updateVolume();
 }
 
-function topRadiusChange() {
-	options.topRadius = document.querySelector('.js-top-radius').value;
+function topDiameterChange() {
+	options.topDiameter = topDiameterInput.value;
+
+	localStorage.setItem("topDiameter", options.topDiameter);
 
 	updateVolume();
 }
 
 function heightChange() {
-	options.height = document.querySelector('.js-height').value;
+	options.height = heightInput.value;
+
+	localStorage.setItem("height", options.height);
 
 	updateVolume();
 }
 
 function fillHeightChange() {
-	options.fillHeight = document.querySelector('.js-fill-height').value;
+	options.fillHeight = fillHeightInput.value;
+
+	localStorage.setItem("fillHeight", options.fillHeight);
 
 	updateVolume();
 }
 
 //////////
 
-document.querySelector('.js-bottom-radius').addEventListener('change', bottomRadiusChange);
-document.querySelector('.js-top-radius').addEventListener('change', topRadiusChange);
-document.querySelector('.js-height').addEventListener('change', heightChange);
-document.querySelector('.js-fill-height').addEventListener('change', fillHeightChange);
+// Get initial options
+options.bottomDiameter = localStorage.getItem("bottomDiameter") || 40;
+options.topDiameter =    localStorage.getItem("topDiameter")    || 25;
+options.height =         localStorage.getItem("height")         || 50;
+options.fillHeight =     localStorage.getItem("fillHeight")     || 20;
+
+bottomDiameterInput.value = options.bottomDiameter;
+topDiameterInput.value =    options.topDiameter;
+heightInput.value =         options.height;
+fillHeightInput.value =     options.fillHeight;
 
 //////////
 
-// Get initial options
-options.bottomRadius = document.querySelector('.js-bottom-radius').value;
-options.topRadius = document.querySelector('.js-top-radius').value;
-options.height = document.querySelector('.js-height').value;
-options.fillHeight = document.querySelector('.js-fill-height').value;
+bottomDiameterInput.addEventListener('input', bottomDiameterChange);
+topDiameterInput.addEventListener('input', topDiameterChange);
+heightInput.addEventListener('input', heightChange);
+fillHeightInput.addEventListener('input', fillHeightChange);
+
+//////////
 
 // Initial run
 updateVolume();

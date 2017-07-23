@@ -1,6 +1,6 @@
 # Conical Frustum Filled Volume Calculator
 
-Calculate the volume of a liquid in a conical frustum that is sitting on the smaller end.
+Calculate the volume of a liquid in a conical frustum.
 
 ![Conical frustum](http://i.imgur.com/FDD1Y4I.png)
 
